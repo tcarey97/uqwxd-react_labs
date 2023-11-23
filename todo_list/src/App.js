@@ -56,7 +56,7 @@ const App = () => {
   }
 
     return (
-      <div id="todo-list">
+    <div id="todo-list">
         <h1>Todo List</h1>
           <form onSubmit={handleSubmit}>
             <input
@@ -65,14 +65,33 @@ const App = () => {
             />
             <button type="submit">Add Todo</button>
         </form>
-        {todos.map((todo) => <div className="todo" key={todo.id}>
-            <div className="todo-text">{todo.text}
-            <input type="checkbox" id="completed" checked={todo.completed} onChange={() => toggleComplete(todo.id)}></input>
-            </div>
-            <button onClick={() => deleteToDo(todo.id)}>Delete</button>
+        {todos.map((todo) => 
+            <div className="todo" key={todo.id}>
+                <div className="todo-text">
+                    {/* conditonally render text box and task label */}
+                    {todo.id === todoEditing ?
+                    (<input
+                        type="text"
+                        id = {todo.id}
+                        defaultValue={todo.text}/>
+                    ) :
+                    (<div>{todo.text}</div>)}
 
-        </div>)}
-        </div>
+                    <input type="checkbox" id="completed" checked={todo.completed} onChange={() => toggleComplete(todo.id)}></input>
+                </div>
+
+                {/* conditonally render the edit and submit edit button */}
+                <div className="todo-actions">
+                    {todo.id === todoEditing ?
+                    (<button onClick={() => submitEdits(todo)}>Submit Edits</button>
+                    ) :
+                    (<button onClick={() => setTodoEditing(todo.id)}>Edit</button>)}
+
+                    <button onClick={() => deleteToDo(todo.id)}>Delete</button>
+                </div>
+
+            </div>)}
+    </div>
   );
 };
 
