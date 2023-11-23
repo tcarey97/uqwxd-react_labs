@@ -3,6 +3,7 @@ import "./App.css";
 
 const App = () => {
   const [todos, setTodos] = useState([]);
+  const [todoEditing, setTodoEditing] = useState(null);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,9 +35,23 @@ const App = () => {
           }
 
           return todo;
-      })
+      });
 
       setTodos(updatedTodos);
+  }
+
+  function submitEdits(newtodo) {
+      const updatedTodos = [...todos].map((todo) => {
+          if (todo.id === newtodo.id){
+              todo.text = document.getElementById(newtodo.id).value;
+          }
+
+          return todo;
+      });
+
+      setTodos(updatedTodos);
+      setTodoEditing(null);
+
 
   }
 
